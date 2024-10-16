@@ -1,6 +1,7 @@
 // middleware/roleCheck.js
 const roleCheck = (allowedRoles) => {
     return (req, res, next) => {
+      console.log(req.user)
       const userRole = req.user.role; // Assuming user role is set in req.user after authentication
   
       if (allowedRoles.includes(userRole)) {

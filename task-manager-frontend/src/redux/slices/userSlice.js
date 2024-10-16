@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: !!localStorage.getItem('token'), // Check if token exists in localStorage
   user: null, // Optionally, store user details
   error: null,
 };
@@ -18,6 +18,7 @@ const userSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.user = null; // Clear user data
+      localStorage.removeItem('token'); // Clear token from local storage
     },
     setError(state, action) {
       state.error = action.payload; // Set error message

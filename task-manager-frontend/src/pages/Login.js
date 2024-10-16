@@ -101,8 +101,8 @@ const url = ''
           >
             <Box>
               <img
-                alt="Jupiter Logo"
-                src="/assets/Jupiter-Power-3-Color-Logo.png"
+                alt="Task Manager"
+                src=""
                 style={{ height: 52, marginBottom: 16, cursor: 'pointer' }}
                 onClick={() => navigate('/')}
               />

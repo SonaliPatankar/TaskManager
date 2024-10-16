@@ -9,6 +9,10 @@ import {
   Snackbar,
   Alert,
   Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
@@ -20,6 +24,7 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
+    role: 'user', // Default role set to "user"
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -54,9 +59,8 @@ const Register = () => {
     setSnackbarOpen(false);
   };
 
-const url =''
   const bgImageStyle = {
-    backgroundImage: `url(${url})`,
+    backgroundImage: `url(${''})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundAttachment: 'fixed',
@@ -81,7 +85,6 @@ const url =''
             opacity: 0.95,
           }}
         >
-          {/* Image and Heading Container */}
           <Grid
             item
             xs={12}
@@ -95,7 +98,7 @@ const url =''
           >
             <Box>
               <img
-                alt="Task Mnager Logo"
+                alt="Task Manager Logo"
                 src="/"
                 style={{ height: 52, marginBottom: 16, cursor: 'pointer' }}
                 onClick={() => navigate('/')}
@@ -113,7 +116,6 @@ const url =''
             </Box>
           </Grid>
 
-          {/* Registration Form Container */}
           <Grid item xs={12} md={6}>
             <Box
               sx={{
@@ -160,6 +162,18 @@ const url =''
                   value={formData.password}
                   onChange={handleChange}
                 />
+                <FormControl variant="outlined" fullWidth sx={{ mt: 2 }}>
+                  <InputLabel>Role</InputLabel>
+                  <Select
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    label="Role"
+                  >
+                    <MenuItem value="user">User</MenuItem>
+                    <MenuItem value="admin">Admin</MenuItem>
+                  </Select>
+                </FormControl>
                 <Button
                   type="submit"
                   fullWidth

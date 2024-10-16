@@ -1,28 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Paper, Typography } from '@mui/material';
+import axios from 'axios';
+import { Typography, Card, CardContent } from '@mui/material';
 
-const TaskDetails = () => {
-  const { taskId } = useParams();
-  const task = useSelector((state) =>
-    state.tasks.tasks.find((task) => task._id === taskId)
-  );
+const TaskDetail = () => {
+  const { id } = useParams(); // Get the task ID from the URL
+  const [task, setTask] = useState(null);
+
+  useEffect(() => {
+    const fetchTask = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        console.log(id)
+        const response = await axios.get(`http://localhost:5000/api/tasks/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setTask(response.data); // Set the task data
+      } catch (error) {
+        console.error('Error fetching task details:', error);
+      }
+    };
+
+    fetchTask();
+  }, [id]);
 
   if (!task) {
-    return <Typography variant="h6">Task not found</Typography>;
+    return <Typography>Loading task details...</Typography>;
   }
 
   return (
-    <Paper style={{ padding: 20 }}>
-      <Typography variant="h4">{task.title}</Typography>
-      <Typography variant="body1">Description: {task.description}</Typography>
-      <Typography variant="body1">Due Date: {new Date(task.dueDate).toLocaleDateString()}</Typography>
-      <Typography variant="body1">Priority: {task.priority}</Typography>
-      <Typography variant="body1">Status: {task.status}</Typography>
-      <Typography variant="body1">Assignee: {task.assignee}</Typography>
-    </Paper>
+    <Card sx={{ maxWidth: 600, margin: 'auto', mt: 5 }}>
+      <CardContent>
+        <Typography variant="h5">{task.title}</Typography>
+        <Typography color="textSecondary">{task.description}</Typography>
+        <Typography variant="body2">Due Date: {new Date(task.dueDate).toLocaleDateString()}</Typography>
+        <Typography variant="body2">Priority: {task.priority}</Typography>
+        <Typography variant="body2">Status: {task.status}</Typography>
+        <Typography variant="body2">
+          Assignees: {task.assignees ? task.assignees.map((assignee) => assignee.email).join(', ') : 'No Assignees'}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
-export default TaskDetails;
+export default TaskDetail;
