@@ -12,12 +12,6 @@ router.post("/create", authMiddleware, async (req, res) => {
     const { title, description, dueDate, priority, status, assignees } = req.body;
 
     console.log(assignees)
-    // Find users based on their emails (or other identifier) to get their IDs
-    // const assigneeUsers = await User.find({ email: { $in: assignees } });
-    // if (assigneeUsers.length === 0) {
-    //   return res.status(400).json({ message: "No valid assignees found" });
-    // }
-
     const task = new Task({
       title,
       description,

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, CardContent, Typography, IconButton, Box } from '@mui/material';
+import { Card, CardContent, Typography, IconButton, Box, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 
 const TaskList = ({ tasks, onEdit, onDelete }) => {
   const theme = useTheme();
@@ -14,7 +15,7 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
       case "In Progress":
         return theme.palette.secondary.main;
       case "Completed":
-        return theme.palette.common.green;
+        return theme.palette.success.main;
       default:
         return theme.palette.text.primary;
     }
@@ -70,6 +71,15 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
                   <IconButton onClick={() => onDelete(task._id)} color="error">
                     <Delete />
                   </IconButton>
+                  <Button
+                    component={Link}
+                    to={`/tasks/${task._id}`}
+                    variant="contained"
+                    size="small"
+                    sx={{ ml: 1 }}
+                  >
+                    View Details
+                  </Button>
                 </Box>
               </Card>
             ))}
