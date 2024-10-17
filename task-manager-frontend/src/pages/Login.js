@@ -14,8 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { login, setError } from '../redux/slices/userSlice'; // Import your actions
-
-
+import task_logo from '../assets/task_logo.png';
 
 const Login = () => {
   const theme = useTheme();
@@ -43,15 +42,15 @@ const Login = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
-      localStorage.setItem('token', response.data.token); // Store the token in local storage
+      localStorage.setItem('token', response.data.token);
       setSnackbarMessage('Login successful!');
       setSnackbarOpen(true);
-      dispatch(login(response.data.user)); // Dispatch login action with user data
-      navigate('/tasks'); // Redirect to the tasks page
+      dispatch(login(response.data.user));
+      navigate('/tasks');
     } catch (error) {
       console.error('Error logging in:', error);
       setSnackbarMessage('Login failed!');
-      dispatch(setError('Login failed! Please check your credentials.')); // Set error in Redux state
+      dispatch(setError('Login failed! Please check your credentials.'));
       setSnackbarOpen(true);
     }
   };
@@ -102,9 +101,8 @@ const url = ''
             <Box>
               <img
                 alt="Task Manager"
-                src=""
+                src={task_logo}
                 style={{ height: 52, marginBottom: 16, cursor: 'pointer' }}
-                onClick={() => navigate('/')}
               />
               <Typography
                 component="h1"

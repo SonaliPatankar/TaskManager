@@ -10,8 +10,11 @@ import MenuItem from "@mui/material/MenuItem";
 import { Menu } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import task_logo from "../assets/prioritize.png";
 
 function Header() {
+  const theme = useTheme(); // Using the theme for colors and spacing
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
 
@@ -24,35 +27,47 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="md">
+    <AppBar position="static" sx={{ backgroundColor: theme.palette.primary.main }}>
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <img
-            alt="Task Manager Logo"
-            src=""
-            style={{ height: 52, marginRight: 16, cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          />
+          {/* Left side logo with flexGrow to create space */}
+          <Box sx={{ flexGrow: 1 }}>
+            <img
+              alt="Task Manager Logo"
+              src={task_logo}
+              style={{ height: 60, marginRight: theme.spacing(2), cursor: "pointer" }}
+              onClick={() => navigate("/")}
+            />
+          </Box>
+
+          {/* Typography centered by setting flexGrow on both sides */}
           <Typography
-            variant="h6"
+            variant="h5"
             component="div"
-            sx={{ flexGrow: 1, color: "white" }}
+            sx={{
+              color: theme.palette.common.white,
+              fontWeight: "bold",
+              letterSpacing: "0.1rem",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/")}
           >
             Task Manager App
           </Typography>
-          <Box>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon
-                  style={{ fontSize: "32px", color: "white" }}
-                />
+
+          {/* Right side account icon with flexGrow to create space */}
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}>
+            <Tooltip title="Account Settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                <AccountCircleIcon sx={{ fontSize: 36, color: theme.palette.common.white }} />
               </IconButton>
             </Tooltip>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
+                vertical: "bottom",
                 horizontal: "right",
               }}
               keepMounted
@@ -62,6 +77,7 @@ function Header() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              sx={{ mt: 1 }}
             >
               <MenuItem
                 onClick={() => {
@@ -69,7 +85,9 @@ function Header() {
                   navigate("/logout");
                 }}
               >
-                <Typography textAlign="center">Logout</Typography>
+                <Typography textAlign="center" sx={{ color: theme.palette.text.primary }}>
+                  Logout
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>

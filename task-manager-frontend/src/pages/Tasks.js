@@ -4,7 +4,7 @@ import { fetchTasks, createTask, updateTask, deleteTask } from '../redux/slices/
 import TaskList from '../components/TaskList';
 import TaskFormDialog from '../components/TaskFormDialog';
 import FilterSortControls from '../components/FilterSortControls';
-import { Button } from '@mui/material';
+import { Button, Box, Typography, Container, CircularProgress, Divider } from '@mui/material';
 import axios from 'axios';
 import './Tasks.css';
 
@@ -68,6 +68,7 @@ const Tasks = () => {
     await dispatch(deleteTask({ token, taskId }));
     dispatch(fetchTasks(token)); // Refresh the list of tasks after deletion
   };
+
   const handleEditTask = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -78,23 +79,59 @@ const Tasks = () => {
       console.error("Error updating task:", error);
     }
   };
-  
+
   return (
-    <div className="tasks-container">
-      <h2>Task List</h2>
+    <Container maxWidth="lg" className="tasks-container" >
+      <Typography variant="h4" align="center" gutterBottom>
+        Task List
+      </Typography>
+      <Divider sx={{ mb: 4 }} />
+      
       <FilterSortControls
         filterStatus={filterStatus}
         setFilterStatus={setFilterStatus}
         sortOption={sortOption}
         setSortOption={setSortOption}
       />
-      <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)} sx={{ mb: 2 }}>
-        Add Task
-      </Button>
-      <TaskList tasks={filteredTasks} onEdit={setEditTask} onDelete={handleDeleteTask} />
-      <TaskFormDialog open={openDialog} onClose={() => setOpenDialog(false)} task={newTask} setTask={setNewTask} users={users} handleSubmit={handleCreateTask} />
-      {editTask && <TaskFormDialog open={!!editTask} onClose={() => setEditTask(null)} task={editTask} setTask={setEditTask} users={users} handleSubmit={handleEditTask} />}
-    </div>
+      
+      <Box display="flex" justifyContent="flex-end" sx={{ mb: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setOpenDialog(true)}
+        >
+          Add Task
+        </Button>
+      </Box>
+      
+      {taskStatus === 'loading' ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
+          <CircularProgress />
+        </Box>
+      ) : (
+        <TaskList tasks={filteredTasks} onEdit={setEditTask} onDelete={handleDeleteTask} />
+      )}
+      
+      <TaskFormDialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        task={newTask}
+        setTask={setNewTask}
+        users={users}
+        handleSubmit={handleCreateTask}
+      />
+      
+      {editTask && (
+        <TaskFormDialog
+          open={!!editTask}
+          onClose={() => setEditTask(null)}
+          task={editTask}
+          setTask={setEditTask}
+          users={users}
+          handleSubmit={handleEditTask}
+        />
+      )}
+    </Container>
   );
 };
 

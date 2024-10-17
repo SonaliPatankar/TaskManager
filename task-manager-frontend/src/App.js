@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/tasks/:id" element={<PrivateRoute element={<TaskDetails />} />}/> {/* Route for task details */}
+        <Route path="/tasks/:Id" element={<PrivateRoute element={<TaskDetails />} />}/> {/* Route for task details */}
         <Route path="/tasks" element={<PrivateRoute element={<Tasks />} />} /> {/* Protect Tasks route */}
       </Routes>
     </>

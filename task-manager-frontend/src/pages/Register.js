@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import task_logo from '../assets/task_logo.png';
 
 const Register = () => {
   const theme = useTheme();
@@ -99,9 +100,8 @@ const Register = () => {
             <Box>
               <img
                 alt="Task Manager Logo"
-                src="/"
+                src={task_logo}
                 style={{ height: 52, marginBottom: 16, cursor: 'pointer' }}
-                onClick={() => navigate('/')}
               />
               <Typography
                 component="h1"

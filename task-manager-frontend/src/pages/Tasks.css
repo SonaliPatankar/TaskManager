@@ -4,10 +4,7 @@
     flex-direction: column;
   }
   
-  .task-columns {
-    display: flex;
-    justify-content: space-between;
-  }
+
   
   .task-column {
     flex: 1;
@@ -16,18 +13,5 @@
     border-radius: 8px;
     padding: 10px;
   }
-  
-  .task-card {
-    margin: 10px 0;
-    transition: transform 0.2s;
-  }
-  
-  .task-card:hover {
-    transform: scale(1.02);
-  }
-  
-  .card-actions {
-    display: flex;
-    justify-content: flex-end;
-  }
+
   
