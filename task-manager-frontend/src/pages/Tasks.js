@@ -4,7 +4,7 @@ import { fetchTasks, createTask, updateTask, deleteTask } from '../redux/slices/
 import TaskList from '../components/TaskList';
 import TaskFormDialog from '../components/TaskFormDialog';
 import FilterSortControls from '../components/FilterSortControls';
-import { Button, Box, Typography, Container, CircularProgress, Divider } from '@mui/material';
+import { Button, Box, Typography, CircularProgress, Divider } from '@mui/material';
 import axios from 'axios';
 import './Tasks.css';
 
@@ -81,7 +81,7 @@ const Tasks = () => {
   };
 
   return (
-    <Container maxWidth="lg" className="tasks-container" >
+    <Box sx={{ maxWidth: '100%', overflowX: 'hidden', padding: 10 }}>
       <Typography variant="h4" align="center" gutterBottom>
         Task List
       </Typography>
@@ -131,7 +131,7 @@ const Tasks = () => {
           handleSubmit={handleEditTask}
         />
       )}
-    </Container>
+    </Box>
   );
 };
 

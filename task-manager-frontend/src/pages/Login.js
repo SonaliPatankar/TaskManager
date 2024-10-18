@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   TextField,
   Button,
@@ -9,22 +9,22 @@ import {
   Snackbar,
   Alert,
   Box,
-} from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
-import { login, setError } from '../redux/slices/userSlice'; // Import your actions
-import task_logo from '../assets/task_logo.png';
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { login, setError } from "../redux/slices/userSlice"; // Import your actions
+import task_logo from "../assets/task_logo.png";
 
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,22 +35,25 @@ const Login = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      setSnackbarMessage('Email and Password are required');
+      setSnackbarMessage("Email and Password are required");
       setSnackbarOpen(true);
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
-      localStorage.setItem('token', response.data.token);
-      setSnackbarMessage('Login successful!');
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData
+      );
+      localStorage.setItem("token", response.data.token);
+      setSnackbarMessage("Login successful!");
       setSnackbarOpen(true);
       dispatch(login(response.data.user));
-      navigate('/tasks');
+      navigate("/tasks");
     } catch (error) {
-      console.error('Error logging in:', error);
-      setSnackbarMessage('Login failed!');
-      dispatch(setError('Login failed! Please check your credentials.'));
+      console.error("Error logging in:", error);
+      setSnackbarMessage("Login failed!");
+      dispatch(setError("Login failed! Please check your credentials."));
       setSnackbarOpen(true);
     }
   };
@@ -59,21 +62,8 @@ const Login = () => {
     setSnackbarOpen(false);
   };
 
-const url = ''
-  const bgImageStyle = {
-    backgroundImage: `url(${url})`,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundAttachment: 'fixed',
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-
   return (
-    <Box sx={bgImageStyle}>
+    <Box sx={{ padding: "15%" }}>
       <Container component="main" maxWidth="md">
         <Grid
           container
@@ -82,7 +72,7 @@ const url = ''
             backgroundColor: theme.palette.background.paper,
             borderRadius: 1,
             boxShadow: 3,
-            padding: '26px',
+            padding: "26px",
             opacity: 0.95,
           }}
         >
@@ -92,17 +82,17 @@ const url = ''
             xs={12}
             md={6}
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'left',
-              justifyContent: 'start',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "left",
+              justifyContent: "start",
             }}
           >
             <Box>
               <img
                 alt="Task Manager"
                 src={task_logo}
-                style={{ height: 52, marginBottom: 16, cursor: 'pointer' }}
+                style={{ height: 52, marginBottom: 16, cursor: "pointer" }}
               />
               <Typography
                 component="h1"
@@ -121,14 +111,18 @@ const url = ''
           <Grid item xs={12} md={6}>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-                height: '100%',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                height: "100%",
               }}
             >
-              <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{ width: "100%" }}
+              >
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -165,13 +159,17 @@ const url = ''
                   Sign in
                 </Button>
                 <Box sx={{ mt: 2 }}>
-                  <Typography variant="body1" color="textSecondary" align="center">
-                    Don’t have an account?{' '}
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    align="center"
+                  >
+                    Don’t have an account?{" "}
                     <Link
                       to="/register"
                       color="secondary"
                       style={{
-                        textDecoration: 'none',
+                        textDecoration: "none",
                         color: theme.palette.secondary.main,
                       }}
                     >
@@ -189,7 +187,11 @@ const url = ''
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
       >
-        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="info"
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

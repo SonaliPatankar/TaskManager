@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Typography, Card, CardContent, Box, CircularProgress } from '@mui/material';
+import {
+  Typography,
+  Card,
+  CardContent,
+  Box,
+  CircularProgress,
+  Divider,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const TaskDetail = () => {
   const { id } = useParams(); // Get the task ID from the URL
@@ -27,78 +38,80 @@ const TaskDetail = () => {
 
   if (!task) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="50vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
         <CircularProgress color="primary" />
       </Box>
     );
   }
 
   return (
-    <Card
+    <Box
       sx={{
-        maxWidth: 600,
-        margin: 'auto',
-        mt: 5,
         backgroundColor: theme.palette.background.default,
-        boxShadow: theme.shadows[4],
-        borderRadius: theme.shape.borderRadius,
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: theme.spacing(3),
       }}
     >
-      <CardContent>
-        {/* Title */}
-        <Typography
-          variant="h4"
-          component="div"
-          sx={{
-            fontWeight: 'bold',
-            color: theme.palette.primary.main,
-            marginBottom: theme.spacing(2),
-          }}
-        >
-          {task.title}
-        </Typography>
+      <Card
+        sx={{
+          maxWidth: 600,
+          width: '100%',
+          backgroundColor: theme.palette.background.paper,
+          boxShadow: theme.shadows[8],
+          borderRadius: theme.shape.borderRadius,
+          padding: theme.spacing(3),
+        }}
+      >
+        <CardContent>
+          <Box display="flex" alignItems="center" mb={2}>
+            <AssignmentIcon sx={{ fontSize: 40, color: theme.palette.primary.main }} />
+            <Typography variant="h4" component="div" sx={{ ml: 2, fontWeight: 'bold', color: theme.palette.primary.main }}>
+              {task.title}
+            </Typography>
+          </Box>
 
-        {/* Description */}
-        <Typography
-          variant="body1"
-          color="textSecondary"
-          sx={{
-            marginBottom: theme.spacing(2),
-            color: theme.palette.text.primary,
-          }}
-        >
-          {task.description}
-        </Typography>
+          <Divider sx={{ mb: 2 }} />
 
-        {/* Due Date */}
-        <Typography variant="body2" sx={{ marginBottom: theme.spacing(1) }}>
-          <strong>Due Date:</strong> {new Date(task.dueDate).toLocaleDateString()}
-        </Typography>
+          <Typography variant="body1" color="textSecondary" sx={{ marginBottom: theme.spacing(2), color: theme.palette.text.primary }}>
+            {task.description}
+          </Typography>
 
-        {/* Priority */}
-        <Typography variant="body2" sx={{ marginBottom: theme.spacing(1) }}>
-          <strong>Priority:</strong> {task.priority}
-        </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box display="flex" alignItems="center">
+              <DateRangeIcon sx={{ color: theme.palette.secondary.main, mr: 1 }} />
+              <Typography variant="body2">
+                <strong>Due Date:</strong> {new Date(task.dueDate).toLocaleDateString()}
+              </Typography>
+            </Box>
 
-        {/* Status */}
-        <Typography variant="body2" sx={{ marginBottom: theme.spacing(1) }}>
-          <strong>Status:</strong> {task.status}
-        </Typography>
+            <Box display="flex" alignItems="center">
+              <PriorityHighIcon sx={{ color: theme.palette.warning.main, mr: 1 }} />
+              <Typography variant="body2">
+                <strong>Priority:</strong> {task.priority}
+              </Typography>
+            </Box>
 
-        {/* Assignees */}
-        <Typography variant="body2">
-          <strong>Assignees:</strong> {task.assignees && task.assignees.length > 0
-            ? task.assignees.map((assignee) => assignee.email).join(', ')
-            : 'No Assignees'}
-        </Typography>
-      </CardContent>
-    </Card>
+            <Box display="flex" alignItems="center">
+              <CheckCircleIcon sx={{ color: theme.palette.success.main, mr: 1 }} />
+              <Typography variant="body2">
+                <strong>Status:</strong> {task.status}
+              </Typography>
+            </Box>
+
+            <Box display="flex" alignItems="center">
+              <Typography variant="body2">
+                <strong>Assignees:</strong> {task.assignees && task.assignees.length > 0
+                  ? task.assignees.map((assignee) => assignee.email).join(', ')
+                  : 'No Assignees'}
+              </Typography>
+            </Box>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
