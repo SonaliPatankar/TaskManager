@@ -1,0 +1,17 @@
+.tasks-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+  
+  .task-column {
+    flex: 1;
+    margin: 10px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  
